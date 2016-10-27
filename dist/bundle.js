@@ -23221,50 +23221,40 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var ContentHeading = function (_React$Component) {
-	    _inherits(ContentHeading, _React$Component);
+	var Spinner = function (_React$Component) {
+	    _inherits(Spinner, _React$Component);
 	
-	    function ContentHeading() {
-	        _classCallCheck(this, ContentHeading);
+	    function Spinner() {
+	        _classCallCheck(this, Spinner);
 	
-	        return _possibleConstructorReturn(this, (ContentHeading.__proto__ || Object.getPrototypeOf(ContentHeading)).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (Spinner.__proto__ || Object.getPrototypeOf(Spinner)).apply(this, arguments));
 	    }
 	
-	    _createClass(ContentHeading, [{
+	    _createClass(Spinner, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(
-	                'h1',
-	                null,
-	                this.props.value
-	            );
+	            if (!!this.props.data.fetching) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'span',
+	                        { key: 'spinner' },
+	                        'Fetching ',
+	                        this.props.data.fetching,
+	                        '...'
+	                    )
+	                );
+	            }
+	            return _react2.default.createElement('div', null);
 	        }
 	    }]);
 	
-	    return ContentHeading;
+	    return Spinner;
 	}(_react2.default.Component);
 	
-	var ContentBody = function (_React$Component2) {
-	    _inherits(ContentBody, _React$Component2);
-	
-	    function ContentBody() {
-	        _classCallCheck(this, ContentBody);
-	
-	        return _possibleConstructorReturn(this, (ContentBody.__proto__ || Object.getPrototypeOf(ContentBody)).apply(this, arguments));
-	    }
-	
-	    _createClass(ContentBody, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: this.props.value } });
-	        }
-	    }]);
-	
-	    return ContentBody;
-	}(_react2.default.Component);
-	
-	var Content = function (_React$Component3) {
-	    _inherits(Content, _React$Component3);
+	var Content = function (_React$Component2) {
+	    _inherits(Content, _React$Component2);
 	
 	    function Content() {
 	        _classCallCheck(this, Content);
@@ -23278,8 +23268,16 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(ContentHeading, { value: this.props.data.content.title }),
-	                _react2.default.createElement(ContentBody, { value: this.props.data.content.description })
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'h1',
+	                        null,
+	                        this.props.data.content.title
+	                    )
+	                ),
+	                _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: this.props.data.content.description } })
 	            );
 	        }
 	    }, {
@@ -23292,35 +23290,8 @@
 	    return Content;
 	}(_react2.default.Component);
 	
-	Content.contextTypes = {
-	    store: _react2.default.PropTypes.object.isRequired
-	};
-	
-	var Button = function (_React$Component4) {
-	    _inherits(Button, _React$Component4);
-	
-	    function Button() {
-	        _classCallCheck(this, Button);
-	
-	        return _possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).apply(this, arguments));
-	    }
-	
-	    _createClass(Button, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'button',
-	                { disabled: this.props.disabled },
-	                this.props.label
-	            );
-	        }
-	    }]);
-	
-	    return Button;
-	}(_react2.default.Component);
-	
-	var Buttons = function (_React$Component5) {
-	    _inherits(Buttons, _React$Component5);
+	var Buttons = function (_React$Component3) {
+	    _inherits(Buttons, _React$Component3);
 	
 	    function Buttons(props, context) {
 	        _classCallCheck(this, Buttons);
@@ -23329,8 +23300,8 @@
 	    }
 	
 	    _createClass(Buttons, [{
-	        key: 'buttonIsEnabled',
-	        value: function buttonIsEnabled(label) {
+	        key: 'buttonShouldBeEnabled',
+	        value: function buttonShouldBeEnabled(label) {
 	            switch (label) {
 	                case 'SAT & SAT Subject':
 	                    return this.assessmentHasBeenAdministered('SAT') || this.assessmentHasBeenAdministered('SAT Subject') || this.assessmentWillBeAdministered();
@@ -23365,7 +23336,11 @@
 	        value: function render() {
 	            var buttons = [];
 	            for (var label in this.props.data.list) {
-	                buttons.push(_react2.default.createElement(Button, { key: label, label: label, disabled: !this.buttonIsEnabled(label) }));
+	                buttons.push(_react2.default.createElement(
+	                    'button',
+	                    { disabled: !this.buttonShouldBeEnabled(label) },
+	                    label
+	                ));
 	            }
 	            return _react2.default.createElement(
 	                'div',
@@ -23376,14 +23351,14 @@
 	    }, {
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
-	            var _this6 = this;
+	            var _this4 = this;
 	
 	            setTimeout(function () {
-	                _helpers.fetch.call(_this6.context.store, 'ACADEMIC_YEARS');
+	                _helpers.fetch.call(_this4.context.store, 'ACADEMIC_YEARS');
 	                setTimeout(function () {
-	                    _helpers.fetch.call(_this6.context.store, 'ASSESSMENTS');
+	                    _helpers.fetch.call(_this4.context.store, 'ASSESSMENTS');
 	                    setTimeout(function () {
-	                        _helpers.fetch.call(_this6.context.store, 'ADMINS');
+	                        _helpers.fetch.call(_this4.context.store, 'ADMINS');
 	                    }, 3000);
 	                }, 3000);
 	            }, 3000);
@@ -23393,44 +23368,16 @@
 	    return Buttons;
 	}(_react2.default.Component);
 	
+	Content.contextTypes = {
+	    store: _react2.default.PropTypes.object.isRequired
+	};
+	
 	Buttons.contextTypes = {
 	    store: _react2.default.PropTypes.object.isRequired
 	};
 	
-	var Spinner = function (_React$Component6) {
-	    _inherits(Spinner, _React$Component6);
-	
-	    function Spinner() {
-	        _classCallCheck(this, Spinner);
-	
-	        return _possibleConstructorReturn(this, (Spinner.__proto__ || Object.getPrototypeOf(Spinner)).apply(this, arguments));
-	    }
-	
-	    _createClass(Spinner, [{
-	        key: 'render',
-	        value: function render() {
-	            if (!!this.props.data.fetching) {
-	                return _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    _react2.default.createElement(
-	                        'span',
-	                        { key: 'spinner' },
-	                        'Fetching ',
-	                        this.props.data.fetching,
-	                        '...'
-	                    )
-	                );
-	            }
-	            return _react2.default.createElement('div', null);
-	        }
-	    }]);
-	
-	    return Spinner;
-	}(_react2.default.Component);
-	
-	var Panel = exports.Panel = function (_React$Component7) {
-	    _inherits(Panel, _React$Component7);
+	var Panel = exports.Panel = function (_React$Component4) {
+	    _inherits(Panel, _React$Component4);
 	
 	    function Panel() {
 	        _classCallCheck(this, Panel);
