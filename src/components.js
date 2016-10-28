@@ -12,9 +12,14 @@ class Spinner extends React.Component {
         }
         return <div />
     }
+
 }
 
 class Content extends React.Component {
+    static contextTypes = {
+        store: React.PropTypes.object.isRequired
+    };
+
     render() {
         return <div>
             <div><h1>{this.props.data.content.title}</h1></div>
@@ -25,9 +30,14 @@ class Content extends React.Component {
     componentWillMount() {
         fetch.call(this.context.store, 'CONTENT');
     }
+
 }
 
 class Buttons extends React.Component {
+    static contextTypes = {
+        store: React.PropTypes.object.isRequired
+    };
+
     constructor(props, context) {
         super(props, context)
     }
@@ -80,14 +90,6 @@ class Buttons extends React.Component {
     }
 
 }
-
-Content.contextTypes = {
-    store: React.PropTypes.object.isRequired
-};
-
-Buttons.contextTypes = {
-    store: React.PropTypes.object.isRequired
-};
 
 export class Panel extends React.Component {
     render() {
