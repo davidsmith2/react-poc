@@ -2,26 +2,35 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-    entry: './src/main.js',
+    entry: [
+        'webpack-dev-server/client?http://localhost:8080',
+        'webpack/hot/only-dev-server',
+        './src/main.js'
+    ],
     module: {
         loaders: [
             {
                 test: /.jsx?$/,
-                loader: 'babel',
-                exclude: /node_modules/
+                exclude: /node_modules/,
+                loaders: ['react-hot', 'babel']
             }
         ]
     },
     resolve: {
+        moduleDirectories: ['node_modules', 'src'],
         extensions: ['', '.js', '.jsx']
     },
     output: {
-        path: __dirname + '/dist',
+        path: path.join(__dirname, 'dist'),
         publicPath: '/',
         filename: 'bundle.js'
     },
     devServer: {
-        contentBase: './dist'
+        contentBase: 'dist/',
+        hot: true
     },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ],
     devtool: 'source-map'
 };

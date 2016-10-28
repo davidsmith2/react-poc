@@ -62,7 +62,7 @@ class Buttons extends React.Component {
     render() {
         var buttons = [];
         for (var label in this.props.data.list) {
-            buttons.push(<button disabled={!this.buttonShouldBeEnabled(label)}>{label}</button>)
+            buttons.push(<button disabled={!this.buttonShouldBeEnabled(label)} key={label}>{label}</button>)
         }
         return <div>{buttons}</div>;
     }

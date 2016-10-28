@@ -47,6 +47,8 @@
 	'use strict';
 	
 	var _index = __webpack_require__(1);
+	
+	console.log('hello');
 
 /***/ },
 /* 1 */
@@ -23338,7 +23340,7 @@
 	            for (var label in this.props.data.list) {
 	                buttons.push(_react2.default.createElement(
 	                    'button',
-	                    { disabled: !this.buttonShouldBeEnabled(label) },
+	                    { disabled: !this.buttonShouldBeEnabled(label), key: label },
 	                    label
 	                ));
 	            }
