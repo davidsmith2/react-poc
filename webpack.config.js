@@ -32,5 +32,10 @@ module.exports = {
     plugins: [
         new webpack.HotModuleReplacementPlugin()
     ],
-    devtool: 'source-map'
+    devtool: 'source-map',
+    externals: [
+        'react/addons': true,
+        'react/lib/ExecutionEnvironment': true,
+        'react/lib/ReactContext': true
+    ]
 };

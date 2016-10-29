@@ -1,29 +1,27 @@
 import React from 'react';
-import {pick, omit} from 'lodash';
+import {pick, omit, find} from 'lodash';
 
 import {fetch} from './helpers';
 
-class Spinner extends React.Component {
+export class Spinner extends React.Component {
     render() {
         if (!!this.props.data.fetching) {
-            return <div>
-                <span key="spinner">Fetching {this.props.data.fetching}...</span>
-            </div>
+            return <span key="spinner" ref="spinner">Fetching {this.props.data.fetching}...</span>;
         }
-        return <div />
+        return <div id="spinner" />
     }
 
 }
 
-class Content extends React.Component {
+export class Content extends React.Component {
     static contextTypes = {
         store: React.PropTypes.object.isRequired
     };
 
     render() {
-        return <div>
-            <div><h1>{this.props.data.content.title}</h1></div>
-            <div dangerouslySetInnerHTML={{__html: this.props.data.content.description}} />
+        return <div id="content">
+            <h1 ref="title">{this.props.data.content.title}</h1>
+            <div ref="description" dangerouslySetInnerHTML={{__html: this.props.data.content.description}} />
         </div>;
     }
 
@@ -33,7 +31,7 @@ class Content extends React.Component {
 
 }
 
-class Buttons extends React.Component {
+export class Buttons extends React.Component {
     static contextTypes = {
         store: React.PropTypes.object.isRequired
     };
@@ -58,11 +56,11 @@ class Buttons extends React.Component {
     }
 
     assessmentHasBeenAdministered(assessment) {
-        return this.props.data.assessments.find((obj) => obj.assessment === assessment && !!obj.administered);
+        return find(this.props.data.assessments, (obj) => obj.assessment === assessment && !!obj.administered);
     }
 
     assessmentHasBeenAdministeredInSeason(season) {
-        return this.props.data.admins.find((obj) => obj.admin === season);
+        return find(this.props.data.admins, (obj) => obj.admin === season);
     }
 
     assessmentWillBeAdministered() {
@@ -74,7 +72,7 @@ class Buttons extends React.Component {
         for (var label in this.props.data.list) {
             buttons.push(<button disabled={!this.buttonShouldBeEnabled(label)} key={label}>{label}</button>)
         }
-        return <div>{buttons}</div>;
+        return <div id="buttons">{buttons}</div>;
     }
 
     componentWillMount() {
