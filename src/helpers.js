@@ -8,13 +8,15 @@ const DATA = {
         </ul>
         <p>blah blah blah</p>`
     },
-    ACADEMIC_YEARS: [],
     ASSESSMENTS: [
-        {assessment: 'SAT', administered: true},
-        {assessment: 'SAT Subject', administered: true},
-        {assessment: 'PSAT/NMSQT', administered: false},
-        {assessment: 'PSAT 10', administered: true},
+        {assessment: 'SAT', administered: false},
+        {assessment: 'SAT Subject', administered: false},
+        {assessment: 'PSAT/NMSQT', administered: true},
+        {assessment: 'PSAT 10', administered: false},
         {assessment: 'PSAT 8/9', administered: true}
+    ],
+    ACADEMIC_YEARS: [
+        {academicYear: '2018'}
     ],
     ADMINS: [
         {admin: 'Spring'}

@@ -66,7 +66,7 @@ class Buttons extends React.Component {
     }
 
     assessmentWillBeAdministered() {
-        return !!this.props.data.academicYears.length;
+        return this.props.data.academicYears.length;
     }
 
     render() {
@@ -79,9 +79,9 @@ class Buttons extends React.Component {
 
     componentWillMount() {
         setTimeout(() => {
-            fetch.call(this.context.store, 'ACADEMIC_YEARS');
+            fetch.call(this.context.store, 'ASSESSMENTS');
             setTimeout(() => {
-                fetch.call(this.context.store, 'ASSESSMENTS');
+                fetch.call(this.context.store, 'ACADEMIC_YEARS');
                 setTimeout(() => {
                     fetch.call(this.context.store, 'ADMINS');
                 }, 3000)

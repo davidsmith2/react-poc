@@ -38,14 +38,14 @@ export function reducer(state = STATE, action) {
             return changeState(state, core.requestContent());
         case 'RECEIVE_CONTENT':
             return changeState(state, core.receiveContent(action.data));
-        case 'REQUEST_ACADEMIC_YEARS':
-            return changeState(state, core.requestAcademicYears());
-        case 'RECEIVE_ACADEMIC_YEARS':
-            return changeState(state, core.receiveAcademicYears(action.data));
         case 'REQUEST_ASSESSMENTS':
             return changeState(state, core.requestAssessments());
         case 'RECEIVE_ASSESSMENTS':
             return changeState(state, core.receiveAssessments(action.data));
+        case 'REQUEST_ACADEMIC_YEARS':
+            return changeState(state, core.requestAcademicYears());
+        case 'RECEIVE_ACADEMIC_YEARS':
+            return changeState(state, core.receiveAcademicYears(action.data));
         case 'REQUEST_ADMINS':
             return changeState(state, core.requestAdmins());
         case 'RECEIVE_ADMINS':
